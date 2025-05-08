@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 #Ignore generated csv files
-etl/data/
+etl/data/*.csv
 
 # Distribution / packaging
 .Python
