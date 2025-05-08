@@ -13,6 +13,8 @@ async def main():
 
     aptsDf = loadAptData(scrappedApts)
 
+    aptsDf.to_csv('../data/apt_data_test.csv',encoding='utf-8',index=False)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
