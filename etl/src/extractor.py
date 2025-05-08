@@ -1,16 +1,15 @@
+from typing import List
 from bs4 import BeautifulSoup
 import requests
 import json
 import asyncio
-from apt_parser import getAptInfo
-from playwright.async_api import async_playwright
-import time
-import pandas as pd
+from apt_parser import parseAptInfo
+from playwright.async_api import async_playwright , Page
 import config
 
-async def scrapeApartments(base_url,max_pages):
 
-    apartmentsDf = pd.DataFrame(columns=config.APARTMENTS_DF_COLUMNS)
+async def scrapeApartments(base_url: str ,max_pages: int) -> List[dict]:
+    apts = []
 
     async with async_playwright() as p:
         # Launch browser
@@ -29,8 +28,12 @@ async def scrapeApartments(base_url,max_pages):
                 # Get all apartment links on the current page
                 hrefs = await getPageLinks(page)
 
+                print(f"Got {len(hrefs)} apartments in this page")
+
                 # Process each apartment
-                await processApts(hrefs,apartmentsDf)
+                processedApts = await processApts(hrefs)
+
+                apts.append(processedApts)
 
                 # Check if there's a next page
                 next_page_selector = "a.ant-pagination-item-link:has-text('>')"
@@ -52,11 +55,10 @@ async def scrapeApartments(base_url,max_pages):
 
         finally:
             await browser.close()
+        
+        return apts
 
-        return apartmentsDf
-
-
-async def getPageLinks(page):
+async def getPageLinks(page: Page) -> set:
     hrefs = set()
 
     selector = config.LINKS_SELECTOR
@@ -80,8 +82,9 @@ async def getPageLinks(page):
     
     return hrefs
 
-async def processApts(hrefs,apartmentsDf):
-    scrapped_apts = set()
+async def processApts(hrefs: List[str]) -> List[dict]:
+    scrapped_apts_ids = set()
+    apts_list = []
 
     for href in hrefs:
         # Get apartment info
@@ -94,13 +97,15 @@ async def processApts(hrefs,apartmentsDf):
 
         if next_data_script:
             json_data = json.loads(next_data_script.string)
-            apartment_data = getAptInfo(json_data)
+            apartment_data = parseAptInfo(json_data)
             apartment_id = apartment_data.get('id', '')
 
-            if apartment_id and (apartment_id not in scrapped_apts):
-                apartmentsDf.loc[len(apartmentsDf)] = apartment_data
+            if apartment_id and (apartment_id not in scrapped_apts_ids):
+                apts_list.append(apartment_data)
                 print(f"Scraped apartment: {apartment_id}")
-                scrapped_apts.add(apartment_id)
+                scrapped_apts_ids.add(apartment_id)
 
         # Add a small delay to avoid overloading the server
         await asyncio.sleep(1)
+
+    return apts_list

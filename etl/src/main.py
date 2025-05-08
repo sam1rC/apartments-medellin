@@ -2,7 +2,7 @@ import asyncio
 import config
 import pandas as pd
 from extractor import scrapeApartments
-
+from loaders import loadAptData
 
 async def main():
     # Base URL and pagination setup
@@ -11,7 +11,8 @@ async def main():
 
     scrappedApts = await scrapeApartments(base_url,max_pages)
 
-    scrappedApts.to_csv("../data/apt_data.csv", encoding='utf-8', index=False)
+    aptsDf = loadAptData(scrappedApts)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
