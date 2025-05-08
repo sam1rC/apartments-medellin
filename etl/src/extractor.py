@@ -36,7 +36,7 @@ async def scrapeApartments(base_url: str ,max_pages: int) -> List[dict]:
                 apts.append(processedApts)
 
                 # Check if there's a next page
-                next_page_selector = "a.ant-pagination-item-link:has-text('>')"
+                next_page_selector = config.NEXT_PAGE_SELECTOR
                 has_next = await page.query_selector(next_page_selector)
                 # Check if the element was found AND we haven't reached max_pages
                 if has_next and current_page < max_pages:
