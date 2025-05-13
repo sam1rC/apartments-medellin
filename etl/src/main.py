@@ -1,6 +1,5 @@
 import asyncio
 import config
-import pandas as pd
 from extractor import scrapeApartments
 from loaders import loadAptData
 

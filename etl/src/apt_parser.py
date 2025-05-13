@@ -50,5 +50,7 @@ def getM2Value(m2String) -> float:
   splittedM2String = m2String.split(' ')
 
   if splittedM2String:
-    return float(splittedM2String[0])
+    #Add this to prevent formatting error for edge cases like apartments with more than 1000 m2
+    M2String = splittedM2String[0].replace(",","")
+    return float(M2String)
   return None

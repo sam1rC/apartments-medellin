@@ -51,7 +51,7 @@ async def scrapeApartments(base_url: str ,max_pages: int) -> List[dict]:
                     break # Exit the loop
 
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"An error occurred while extracting: {e}")
 
         finally:
             await browser.close()
