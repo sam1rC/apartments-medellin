@@ -7,7 +7,6 @@ from apt_parser import parseAptInfo
 from playwright.async_api import async_playwright , Page
 import config
 
-
 async def scrapeApartments(base_url: str ,max_pages: int) -> List[dict]:
     apts = []
 
