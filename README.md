@@ -68,7 +68,3 @@ The trained model achieves a mean absolute percentage error (MAPE) of **15.8%** 
 - Integrate MLflow for experiment tracking.
 - Deploy the application using Docker and AWS.
 - Implement a frontend interface for user interaction.
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
