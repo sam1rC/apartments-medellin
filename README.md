@@ -1,72 +1,74 @@
-# Apartments Price Prediction in Medellin, Colombia
+# 🏙️ Apartments Price Prediction in Medellín, Colombia
 
-This project aims to build a machine learning model to predict apartment prices in Medellin, Colombia. It covers the entire data science workflow, including data collection, exploratory data analysis (EDA), model training, and deployment, using tools like Playwright, pandas, scikit-learn, MLflow, Terraform, and AWS.
+This end-to-end machine learning project predicts apartment prices in Medellín, Colombia. It encompasses the full data science lifecycle: data collection, exploratory data analysis (EDA), model training, and deployment.
 
-## Project Overview
+## 📁 Project Structure
 
-- **Data Collection:** Web scraping apartment listings from [fincaraiz.com.co](https://www.fincaraiz.com.co) using Playwright to gather around 1000 apartment listings.
-- **Data Storage:** Exporting the collected data to a CSV file for easy analysis and model training.
-- **Exploratory Data Analysis:** Using Google Colab to clean and visualize the data to identify trends and relationships.
-- **Model Training:** Building and tuning a machine learning model using scikit-learn to predict apartment prices.
-- **Deployment and Monitoring:** Using Terraform for infrastructure setup on AWS, and MLflow for model versioning and monitoring.
+- **`etl/`**: Contains Playwright scripts for web scraping apartment listings from [fincaraiz.com.co](https://www.fincaraiz.com.co).
+- **`notebooks/`**: Jupyter notebooks for data cleaning, EDA, and model selection.
+- **`models/`**: Stores trained machine learning models and related artifacts.
+- **`app/`**: FastAPI application for real-time inference using the trained model.
 
-## Project Structure
+## 🔧 Tools & Technologies
 
-```
-apartments-medellin/
-│
-├── etl/
-│   └── main.py            # Playwright script for data collection
-│
-├── eda/
-│   └── eda.ipynb             # Exploratory Data Analysis notebook (Google Colab)
-│
-├── model/
-│   └── model.py              # Model training and evaluation (upcoming)
-│
-├── terraform/
-│   └── main.tf               # Terraform scripts for AWS infrastructure (upcoming)
-│
-├── mlflow/
-│   └── tracking.py           # Model monitoring setup (upcoming)
-│
-└── README.md                 # Project documentation
-```
+- **Data Collection**: Playwright
+- **Data Analysis**: pandas, matplotlib, seaborn
+- **Modeling**: scikit-learn
+- **Deployment**: FastAPI
 
-## Installation and Setup
+## 🚀 Getting Started
 
-1. **Clone the Repository:**
+1. **Clone the repository**:
 
-```bash
-git clone https://github.com/sam1rC/apartments-medellin.git
-cd apartments-medellin
-```
+   ```bash
+   git clone https://github.com/sam1rC/apartments-medellin.git
+   cd apartments-medellin
+   ```
 
-2. **Install Required Packages:**
+2. **Set up a virtual environment**:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-3. **Run the Web Scraper:**
+3. **Install dependencies (app and ETL script)**:
 
-```bash
-python etl/main.py
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. **Run the EDA Notebook:**
+4. **Run the ETL script**:
 
-- Open `eda/eda.ipynb` in Google Colab or Jupyter Notebook.
+   ```bash
+   python etl/main.py
+   ```
 
-## Next Steps
+5. **Explore the data**:
+   Open and run the notebooks in the `notebooks/` directory to perform EDA and model training.
 
-- Model Training (scikit-learn)
-- Model Deployment and Monitoring (MLflow, Terraform, AWS)
+6. **Start the FastAPI application**:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-## Contributing
+## 📊 Project Workflow
 
-Feel free to contribute to this project by opening an issue or submitting a pull request.
+1. **Data Collection**: Scrape apartment listings using Playwright and save them as a CSV file.
+2. **Data Analysis**: Use Jupyter notebooks to clean the data, perform EDA, and select features.
+3. **Model Training**: Train regression models to predict apartment prices.
+4. **Deployment**: Deploy the best-performing model using FastAPI for real-time predictions.
 
-## License
+## 📈 Results
 
-This project is licensed under the MIT License.
+The trained model achieves a mean absolute percentage error (MAPE) of **15.8%** on the test set, indicating accurate price predictions for apartments in Medellín.
+
+## 🛠️ Future Improvements
+
+- Integrate MLflow for experiment tracking.
+- Deploy the application using Docker and AWS.
+- Implement a frontend interface for user interaction.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
