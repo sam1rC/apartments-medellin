@@ -1,8 +1,5 @@
-from fastapi import FastAPI
-from joblib import load
 from typing import Optional, Union
 from pydantic import BaseModel, Field
-import numpy as np
 import pandas as pd
 
 class ApartmentData(BaseModel):
@@ -25,19 +22,3 @@ class ApartmentData(BaseModel):
             'bedrooms': [self.bedrooms],
             'garage': [self.garage]
         })
-
-app = FastAPI()
-
-model = load(r"../models/rf-model.joblib")
-
-print(model)
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-@app.post("/predict")
-def predict_apt_price(apt: ApartmentData):
-    apt_data = apt.to_df()
-    prediction = model.predict(apt_data)
-    return prediction[0]
